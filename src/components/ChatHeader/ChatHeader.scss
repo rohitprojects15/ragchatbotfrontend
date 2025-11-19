@@ -1,0 +1,186 @@
+/**
+ * ChatHeader Styles
+ */
+
+.chat-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(102, 126, 234, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
+  .header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .header-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+
+    .app-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+      svg {
+        color: white;
+      }
+    }
+
+    .title-text {
+      h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.5px;
+      }
+
+      .subtitle {
+        margin: 2px 0 0 0;
+        font-size: 13px;
+        opacity: 0.9;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .reset-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+
+    &:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    &.resetting {
+      .spinner {
+        svg {
+          animation: spin 1s linear infinite;
+        }
+      }
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .button-text {
+      font-weight: 500;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Responsive styles
+@media (max-width: 768px) {
+  .chat-header {
+    padding: 16px 20px;
+
+    .header-content {
+      gap: 12px;
+    }
+
+    .header-title {
+      .app-icon {
+        width: 40px;
+        height: 40px;
+
+        svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
+
+      .title-text {
+        h1 {
+          font-size: 20px;
+        }
+
+        .subtitle {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .reset-button {
+      padding: 8px 14px;
+      font-size: 13px;
+
+      .button-text {
+        display: none;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-header {
+    padding: 14px 16px;
+
+    .header-title {
+      .title-text {
+        h1 {
+          font-size: 18px;
+        }
+
+        .subtitle {
+          display: none;
+        }
+      }
+    }
+  }
+}
