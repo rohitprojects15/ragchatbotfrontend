@@ -19,6 +19,16 @@ const ChatPage: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
+  // Debug: Log messages state
+  useEffect(() => {
+    console.log('🎨 ChatPage - Messages state updated:', {
+      messagesCount: messages.length,
+      messages: messages,
+      isLoading,
+      isStreaming,
+    });
+  }, [messages, isLoading, isStreaming]);
+
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     if (messagesEndRef.current) {

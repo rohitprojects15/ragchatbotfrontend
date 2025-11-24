@@ -63,16 +63,21 @@ class RagChatApiService {
       }
     );
 
+    console.log('📨 Backend sendMessage response:', backendResponse);
+
     // Transform backend response to match frontend format
-    return {
-      messageId: `msg_${Date.now()}`,
+    const transformedResponse = {
+      messageId: backendResponse.messageId || `msg_${Date.now()}`,
       sessionId: backendResponse.sessionId,
       response: backendResponse.response,
       timestamp: new Date(backendResponse.timestamp),
-      sources: backendResponse.sources.map((s: any) =>
-        `${s.title} (${s.source})`
-      ),
+      sources: backendResponse.sources?.map?.((s: any) =>
+        typeof s === 'string' ? s : `${s.title || 'Unknown'} (${s.source || 'Unknown'})`
+      ) || [],
     };
+
+    console.log('✨ Transformed response:', transformedResponse);
+    return transformedResponse;
   }
 
   /**
@@ -91,9 +96,33 @@ class RagChatApiService {
     }
 
     // Real backend call
-    return ragChatClient.get<IChatHistoryResponse>(
+    const response = await ragChatClient.get<any>(
       RAG_ENDPOINTS.chat.getHistory(sessionId)
     );
+
+    console.log('📡 Backend response:', response);
+
+    // Handle empty or invalid response
+    if (!response || !response.messages) {
+      console.warn('⚠️ Invalid response from backend:', response);
+      return {
+        sessionId,
+        messages: [],
+        totalMessages: 0,
+      };
+    }
+
+    // Transform timestamps from string to Date objects
+    const messages = response.messages.map((msg: any) => ({
+      ...msg,
+      timestamp: new Date(msg.timestamp), // Convert ISO string to Date
+    }));
+
+    return {
+      sessionId: response.sessionId,
+      messages,
+      totalMessages: response.totalMessages || messages.length,
+    };
   }
 
   /**

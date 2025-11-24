@@ -41,11 +41,24 @@ export const useChat = (): IUseChatReturn => {
 
         // Load chat history (if backend supports it)
         try {
+          console.log('🔄 Fetching chat history for session:', existingSessionId);
           const history = await RagChatApi.getChatHistory(existingSessionId);
+          console.log('📦 Received history:', history);
+
           if (history.messages && history.messages.length > 0) {
+            console.log(`✅ Loading ${history.messages.length} messages from history`);
+            console.log('📝 Messages to set:', history.messages);
             setMessages(history.messages);
+
+            // Verify state was set
+            setTimeout(() => {
+              console.log('⏱️ State verification - Messages count after 100ms:', messages.length);
+            }, 100);
+          } else {
+            console.log('📭 No previous messages in history');
           }
         } catch (err) {
+          console.error('❌ Error loading chat history:', err);
           console.log('No previous chat history or backend not available');
         }
       } catch (err) {
