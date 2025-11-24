@@ -90,13 +90,6 @@ const ChatPage: React.FC = () => {
 
           {isLoading && !isStreaming && <TypingIndicator />}
 
-          {error && (
-            <div className="error-banner">
-              <span className="error-icon">⚠️</span>
-              <span className="error-message">{error}</span>
-            </div>
-          )}
-
           <div ref={messagesEndRef} />
         </div>
 
