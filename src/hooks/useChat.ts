@@ -157,11 +157,28 @@ export const useChat = (): UseChatReturn => {
       setMessages((prev) => [...prev, userMessage]);
 
       try {
-        // Send message via WebSocket for streaming
-        webSocketService.sendMessage(sessionId, content.trim());
+        // Send message via REST API
+        const response = await RagChatApi.sendMessage({
+          message: content.trim(),
+          sessionId: sessionId,
+        });
+
+        // Add assistant response
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: response.messageId,
+            content: response.response,
+            role: MessageRole.Assistant,
+            timestamp: response.timestamp,
+            status: MessageStatus.Sent,
+            sources: response.sources,
+          },
+        ]);
 
         // Increment message count
         SessionManager.incrementMessageCount();
+        setIsLoading(false);
       } catch (err) {
         console.error('Error sending message:', err);
         setError('Failed to send message');

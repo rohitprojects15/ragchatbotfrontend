@@ -70,14 +70,14 @@ const ChatPage: React.FC = () => {
               <div className="example-questions">
                 <h3>Try asking:</h3>
                 <div className="example-chips">
-                  <button className="example-chip" onClick={() => sendMessage('What are the latest technology trends?')}>
-                    What are the latest technology trends?
+                  <button className="example-chip" onClick={() => sendMessage('What are the top headlines today?')}>
+                    What are the top headlines today?
                   </button>
-                  <button className="example-chip" onClick={() => sendMessage('Tell me about recent business news')}>
-                    Tell me about recent business news
+                  <button className="example-chip" onClick={() => sendMessage('Summarize recent technology news')}>
+                    Summarize recent technology news
                   </button>
-                  <button className="example-chip" onClick={() => sendMessage('What happened in sports today?')}>
-                    What happened in sports today?
+                  <button className="example-chip" onClick={() => sendMessage('What is happening in global markets?')}>
+                    What is happening in global markets?
                   </button>
                 </div>
               </div>

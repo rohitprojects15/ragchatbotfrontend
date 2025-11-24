@@ -55,10 +55,24 @@ class RagChatApiService {
     }
 
     // Real backend call
-    return ragChatClient.post<SendMessageResponse>(
+    const backendResponse = await ragChatClient.post<any>(
       RAG_ENDPOINTS.chat.sendMessage,
-      request
+      {
+        query: request.message,
+        sessionId: request.sessionId,
+      }
     );
+
+    // Transform backend response to match frontend format
+    return {
+      messageId: `msg_${Date.now()}`,
+      sessionId: backendResponse.sessionId,
+      response: backendResponse.response,
+      timestamp: new Date(backendResponse.timestamp),
+      sources: backendResponse.sources.map((s: any) =>
+        `${s.title} (${s.source})`
+      ),
+    };
   }
 
   /**

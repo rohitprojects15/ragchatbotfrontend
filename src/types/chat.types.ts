@@ -35,7 +35,7 @@ export interface SessionInfo {
 export interface SendMessageRequest {
   sessionId: string;
   message: string;
-  timestamp: Date;
+  timestamp?: Date;
 }
 
 export interface SendMessageResponse {

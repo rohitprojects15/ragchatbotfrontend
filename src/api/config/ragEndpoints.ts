@@ -34,10 +34,10 @@ export const getWebSocketUrl = (): string => {
 export const RAG_ENDPOINTS = {
   // Chat endpoints
   chat: {
-    sendMessage: '/api/chat/message',
-    getHistory: (sessionId: string) => `/api/chat/history/${sessionId}`,
-    resetSession: (sessionId: string) => `/api/chat/session/${sessionId}`,
-    createSession: '/api/chat/session',
+    sendMessage: '/api/chat/query',
+    getHistory: (sessionId: string) => `/api/session/${sessionId}`,
+    resetSession: (sessionId: string) => `/api/session/${sessionId}`,
+    createSession: '/api/chat/query',
   },
 
   // WebSocket endpoint
