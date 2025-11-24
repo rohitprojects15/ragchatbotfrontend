@@ -1,271 +1,221 @@
 # RAG News Chatbot - Frontend
 
-A modern, responsive React + TypeScript chat interface for a RAG-powered news chatbot. Features real-time streaming responses, session management, and a clean UI built with SCSS.
+> **Assignment**: Full Stack Developer Position at Voosh
+> **Project**: RAG-Powered News Chatbot
 
-## Features
-
-- ✨ **Real-time Streaming**: WebSocket-based streaming for live bot responses
-- 🎨 **Modern UI**: Clean, responsive design with smooth animations
-- 📱 **Mobile-Friendly**: Fully responsive across all device sizes
-- 🔄 **Session Management**: Unique session IDs with localStorage persistence
-- 💬 **Markdown Support**: Rich text formatting in bot responses
-- 🎯 **Reset Session**: Easy chat reset functionality
-- 🚀 **Mock Mode**: Built-in mock API for development without backend
+A modern React + TypeScript chat interface for an AI-powered news chatbot. Features real-time responses, session management, keyboard shortcuts, and responsive design.
 
 ## Tech Stack
 
-| Technology | Purpose |
-|------------|---------|
-| **React 19** | UI framework |
-| **TypeScript** | Type safety |
-| **SCSS** | Styling |
-| **Axios** | HTTP client |
-| **WebSocket** | Real-time streaming |
-| **React Markdown** | Markdown rendering |
-| **LocalStorage** | Session persistence |
+- **React** 19.2.0 - UI framework
+- **TypeScript** 4.9.5 - Type safety
+- **SCSS/Sass** 1.94.1 - Styling
+- **Axios** 1.13.2 - HTTP client
+- **React Markdown** 10.1.0 - Rich text rendering
+- **WebSocket** - Real-time streaming (optional)
+
+## Why These Technologies?
+
+**React + TypeScript**: Fast development with type safety, component reusability, great tooling.
+
+**SCSS**: Variables for consistent theming, nested styles for better organization, mixins for responsive breakpoints.
+
+**React Markdown**: Renders bot responses with tables, lists, code blocks - makes AI responses look professional.
+
+**WebSocket**: Real-time streaming for live AI responses (currently using REST API for simplicity).
+
+## Installation
+
+1. **Clone and install dependencies**
+   ```bash
+   git clone https://github.com/rohitprojects15/ragchatbotfrontend.git
+   cd ragchatbotfrontend
+   npm install
+   ```
+
+2. **Set up environment variables**
+
+   Create a `.env` file:
+   ```env
+   # Use 'mock' for development without backend, 'backend' for real API
+   REACT_APP_RAG_MODE=backend
+
+   # Backend URL (when using backend mode)
+   REACT_APP_RAG_BACKEND_URL=http://localhost:5000
+   REACT_APP_RAG_WS_URL=ws://localhost:5000
+   ```
+
+3. **Start the app**
+   ```bash
+   npm start
+   ```
+   Open [http://localhost:3000](http://localhost:3000)
+
+## Features
+
+### Chat Interface
+- Real-time streaming responses
+- Markdown support (tables, lists, code blocks)
+- Typing indicator (only when loading, not during streaming)
+- Error handling with inline messages
+- Message status tracking
+
+### Session Management
+- Persistent sessions with localStorage
+- History loads on page refresh (24-hour TTL in Redis)
+- Reset session button
+- Session format: `session_<timestamp>_<random>`
+
+### Keyboard Shortcuts
+- `/` - Focus input from anywhere (like YouTube)
+- `Enter` - Send message
+- `Shift + Enter` - New line
+
+### Responsive Design
+Fully responsive from mobile to desktop:
+- **Small Mobile** (≤ 480px): Compact layout, hide hints
+- **Mobile** (≤ 768px): Smaller avatars and spacing
+- **Tablet** (≤ 1024px): Medium sizing
+- **Desktop** (1024px - 1600px): Standard layout
+- **Large** (≥ 1600px): Enhanced spacing
 
 ## Project Structure
 
 ```
 src/
 ├── api/
-│   ├── RagChatClient.ts          # HTTP client (axios-based)
+│   ├── RagChatClient.ts         # Axios HTTP client
 │   ├── config/
-│   │   └── ragEndpoints.ts       # API endpoint definitions
+│   │   └── ragEndpoints.ts      # API endpoints
 │   └── services/
-│       └── RagChatApi.ts         # Chat API methods
-│
-├── services/
-│   ├── WebSocketService.ts       # WebSocket streaming handler
-│   └── SessionManager.ts         # Session ID management
-│
-├── hooks/
-│   └── useChat.ts                # Main chat logic hook
-│
+│       └── RagChatApi.ts        # API methods
 ├── components/
-│   ├── ChatMessage/              # Message bubble component
-│   ├── ChatInput/                # Text input with send button
-│   ├── ChatHeader/               # Header with reset button
-│   └── TypingIndicator/          # "Bot is typing..." animation
-│
+│   ├── ChatHeader/              # Header with reset button
+│   ├── ChatInput/               # Input with auto-resize
+│   ├── ChatMessage/             # Message bubbles
+│   └── TypingIndicator/         # "..." animation
+├── hooks/
+│   └── useChat.ts               # Main chat logic
+├── interfaces/
+│   └── IChat.ts                 # TypeScript interfaces
 ├── pages/
-│   └── ChatPage/                 # Main chat page
-│
-├── types/
-│   └── chat.types.ts             # TypeScript interfaces
-│
-└── App.tsx                       # Root component
+│   └── ChatPage/                # Main chat page
+├── services/
+│   ├── SessionManager.ts        # Session ID management
+│   └── WebSocketService.ts      # WebSocket handler
+└── index.tsx                    # App entry
 ```
 
-## Getting Started
+## How It Works
 
-### Prerequisites
+### Session Flow
+1. App loads → Check localStorage for session ID
+2. If found → Fetch chat history from backend
+3. If not found → Create new session
+4. User sends message → Save to Redis with 24hr TTL
+5. User refreshes → History loads from Redis
 
-- Node.js 16+
-- npm or yarn
+### Message Flow (REST API)
+1. User types and hits Enter
+2. Message sent to `/api/chat/query`
+3. Backend runs RAG pipeline (retrieve articles, generate response)
+4. Response returned with sources
+5. Both messages saved to Redis
+6. Chat history persists for 24 hours
 
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   cd ragchatbotfrontend
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Set up environment variables**
-   ```bash
-   cp .env.example .env
-   ```
-
-   Edit `.env` to configure your API mode:
-   ```env
-   # For development (uses mock data)
-   REACT_APP_RAG_MODE=mock
-
-   # For production (connects to real backend)
-   REACT_APP_RAG_MODE=backend
-   REACT_APP_RAG_BACKEND_URL=http://localhost:3001
-   REACT_APP_RAG_WS_URL=ws://localhost:3001/chat
-   ```
-
-4. **Start the development server**
-   ```bash
-   npm start
-   ```
-
-   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-## Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm start` | Runs the app in development mode |
-| `npm build` | Builds the app for production |
-| `npm test` | Launches the test runner |
-| `npm run eject` | Ejects from Create React App (⚠️ irreversible) |
+### Interface Naming
+All TypeScript interfaces use "I" prefix:
+```typescript
+IChatMessage, ISendMessageRequest, IChatHistoryResponse, etc.
+```
 
 ## API Modes
 
 ### Mock Mode (Development)
-
-The app includes a built-in mock API that simulates:
-- Real-time streaming responses
-- Session management
-- Realistic delays and typing effects
-
-**Perfect for:**
-- Frontend development without backend
-- UI/UX testing
-- Demo purposes
+```env
+REACT_APP_RAG_MODE=mock
+```
+- Simulates AI responses without backend
+- Good for frontend development
+- Pre-defined responses with realistic delays
 
 ### Backend Mode (Production)
-
-Connects to your real Node.js/Express backend with:
-- RAG pipeline integration
-- Google Gemini API
-- Redis session storage
-- Vector database queries
-
-## Environment Variables
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `REACT_APP_RAG_MODE` | API mode: `mock` or `backend` | `mock` |
-| `REACT_APP_RAG_BACKEND_URL` | Backend API base URL | `http://localhost:3001` |
-| `REACT_APP_RAG_WS_URL` | WebSocket endpoint URL | `ws://localhost:3001/chat` |
-
-## Key Components
-
-### ChatPage
-Main chat interface that orchestrates all components and manages state.
-
-### ChatMessage
-Displays individual messages with:
-- User/assistant role differentiation
-- Markdown rendering for bot responses
-- Error state handling
-- Streaming animation
-
-### ChatInput
-Text input field with:
-- Auto-resizing textarea
-- Send button with loading state
-- Keyboard shortcuts (Enter to send, Shift+Enter for newline)
-- Character limit (2000 chars)
-
-### ChatHeader
-Header bar featuring:
-- App branding
-- Reset session button
-- Responsive design
-
-### TypingIndicator
-Animated "typing..." indicator shown during bot response generation.
-
-## Session Management
-
-Sessions are managed using `SessionManager`:
-
-```typescript
-// Get or create session ID
-const sessionId = SessionManager.getOrCreateSession();
-
-// Clear session (reset chat)
-SessionManager.clearSession();
-
-// Get session info
-const info = SessionManager.getSessionInfo();
+```env
+REACT_APP_RAG_MODE=backend
+REACT_APP_RAG_BACKEND_URL=http://localhost:5000
 ```
-
-Session data is stored in `localStorage` and persists across page refreshes.
-
-## WebSocket Streaming
-
-Real-time streaming is handled by `WebSocketService`:
-
-```typescript
-// Send message
-webSocketService.sendMessage(sessionId, message);
-
-// Listen for chunks
-webSocketService.onMessage((wsMessage) => {
-  if (wsMessage.type === 'chunk') {
-    // Handle streaming chunk
-  }
-});
-```
-
-In **mock mode**, streaming is simulated with realistic delays.
-
-## Styling
-
-All styles use **SCSS** with:
-- Component-scoped styles
-- Responsive breakpoints (768px, 480px)
-- CSS animations
-- Custom scrollbars
-- Accessibility focus states
-
-## Connecting to Backend
-
-When your backend is ready:
-
-1. Update `.env`:
-   ```env
-   REACT_APP_RAG_MODE=backend
-   REACT_APP_RAG_BACKEND_URL=http://your-backend-url
-   REACT_APP_RAG_WS_URL=ws://your-backend-url/chat
-   ```
-
-2. Ensure your backend provides these endpoints:
-   - `POST /api/chat/message` - Send message
-   - `GET /api/chat/history/:sessionId` - Get history
-   - `DELETE /api/chat/session/:sessionId` - Reset session
-   - `WebSocket /chat` - Streaming connection
-
-3. Backend should send WebSocket messages in this format:
-   ```json
-   {
-     "type": "start" | "chunk" | "end" | "error",
-     "messageId": "msg_123",
-     "content": "response chunk",
-     "metadata": {
-       "sources": ["Reuters", "BBC"],
-       "processingTime": 2.5
-     }
-   }
-   ```
+- Connects to real RAG backend
+- Real AI responses from Google Gemini
+- Actual news articles as sources
 
 ## Deployment
 
-### Build for Production
-
+### Vercel (Recommended)
 ```bash
-npm run build
-```
-
-This creates an optimized production build in the `build/` folder.
-
-### Recommended Hosting (Free)
-
-| Service | Free Tier | Deployment |
-|---------|-----------|------------|
-| **Vercel** | Unlimited | `npx vercel` |
-| **Netlify** | 100GB/month | Drag & drop `build/` folder |
-| **GitHub Pages** | Unlimited | Push to `gh-pages` branch |
-| **Cloudflare Pages** | Unlimited | Connect GitHub repo |
-
-### Deploy to Vercel (Recommended)
-
-```bash
-npm install -g vercel
-npm run build
+npm i -g vercel
 vercel --prod
 ```
+
+Set environment variables in Vercel dashboard:
+- `REACT_APP_RAG_MODE=backend`
+- `REACT_APP_RAG_BACKEND_URL=https://your-backend.com`
+
+### Netlify
+```bash
+npm i -g netlify-cli
+npm run build
+netlify deploy --prod --dir=build
+```
+
+### Other Options
+- GitHub Pages
+- AWS S3 + CloudFront
+- Firebase Hosting
+
+## Assignment Requirements ✓
+
+### Frontend
+- [x] Chat screen showing past messages
+- [x] Input box for new messages
+- [x] Streaming bot responses (REST API fallback ready)
+- [x] Reset session button
+- [x] Clean, responsive UI with SCSS
+- [x] Mobile-friendly design
+
+### Session Management
+- [x] Unique session ID per user
+- [x] Session persistence (localStorage + Redis)
+- [x] Fetch session history on load
+- [x] Clear/reset session functionality
+
+### User Experience
+- [x] Typing indicator (shows only when loading)
+- [x] Markdown support for rich text
+- [x] Error handling
+- [x] Keyboard shortcuts
+- [x] Loading states
+
+### Code Quality
+- [x] TypeScript with consistent "I" interface prefix
+- [x] Component-based architecture
+- [x] Responsive design patterns
+- [x] Clean, maintainable code
+
+## Troubleshooting
+
+**Messages not persisting after refresh?**
+- Check backend server is running
+- Verify `.env` has correct backend URL
+- Check browser console for API errors
+
+**UI not updating with history?**
+- Backend must return `messages` array (not `history`)
+- Check Redis TTL hasn't expired (24 hours)
+- Restart backend after code changes
+
+**Duplicate messages showing?**
+- Backend handles deduplication automatically
+- Old format messages are cleaned on read
 
 ## Browser Support
 
@@ -273,18 +223,9 @@ vercel --prod
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
-- Mobile browsers
-
-## Contributing
-
-This is an assignment project. Feel free to customize and extend!
-
-## License
-
-MIT
+- Mobile browsers (iOS 12+, Android 5+)
 
 ---
 
-**Built for:** Voosh Full Stack Developer Assignment
-**Assignment:** RAG-Powered News Chatbot
-**Tech Required:** React + SCSS + Node.js + RAG Pipeline
+**Assignment for**: Voosh Full Stack Developer Position
+**Submitted by**: Rohit Gundeti (rohitrg1522@gmail.com)
