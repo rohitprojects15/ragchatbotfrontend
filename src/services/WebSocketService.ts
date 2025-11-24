@@ -6,9 +6,9 @@
  */
 
 import { RAG_API_MODE, getWebSocketUrl } from '../api/config/ragEndpoints';
-import { WebSocketMessage } from '../types/chat.types';
+import { IWebSocketMessage } from '../interfaces/IChat';
 
-type MessageHandler = (message: WebSocketMessage) => void;
+type MessageHandler = (message: IWebSocketMessage) => void;
 type ErrorHandler = (error: Error) => void;
 type CloseHandler = () => void;
 
@@ -42,7 +42,7 @@ class WebSocketService {
 
       this.ws.onmessage = (event) => {
         try {
-          const message: WebSocketMessage = JSON.parse(event.data);
+          const message: IWebSocketMessage = JSON.parse(event.data);
           this.notifyMessageHandlers(message);
         } catch (error) {
           console.error('Error parsing WebSocket message:', error);
@@ -182,7 +182,7 @@ class WebSocketService {
   /**
    * Notify all message handlers
    */
-  private notifyMessageHandlers(message: WebSocketMessage): void {
+  private notifyMessageHandlers(message: IWebSocketMessage): void {
     this.messageHandlers.forEach((handler) => handler(message));
   }
 

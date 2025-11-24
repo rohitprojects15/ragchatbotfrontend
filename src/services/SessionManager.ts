@@ -5,7 +5,7 @@
  * Each user gets a unique session ID that persists across page refreshes.
  */
 
-import { SessionInfo } from '../types/chat.types';
+import { ISessionInfo } from '../interfaces/IChat';
 
 const SESSION_STORAGE_KEY = 'rag_chat_session';
 const SESSION_INFO_KEY = 'rag_chat_session_info';
@@ -44,7 +44,7 @@ class SessionManagerService {
     this.saveSessionId(sessionId);
 
     // Initialize session info
-    const sessionInfo: SessionInfo = {
+    const sessionInfo: ISessionInfo = {
       sessionId,
       createdAt: new Date(),
       messageCount: 0,
@@ -88,7 +88,7 @@ class SessionManagerService {
   /**
    * Get session info
    */
-  public getSessionInfo(): SessionInfo | null {
+  public getSessionInfo(): ISessionInfo | null {
     try {
       const infoStr = localStorage.getItem(SESSION_INFO_KEY);
       if (!infoStr) return null;
@@ -109,7 +109,7 @@ class SessionManagerService {
   /**
    * Save session info
    */
-  public saveSessionInfo(info: SessionInfo): void {
+  public saveSessionInfo(info: ISessionInfo): void {
     try {
       localStorage.setItem(SESSION_INFO_KEY, JSON.stringify(info));
     } catch (error) {

@@ -5,13 +5,13 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { ChatMessage, MessageRole, MessageStatus } from '../types/chat.types';
+import { IChatMessage, IMessageRole, IMessageStatus } from '../interfaces/IChat';
 import { SessionManager } from '../services/SessionManager';
 import { webSocketService } from '../services/WebSocketService';
 import { RagChatApi } from '../api/services/RagChatApi';
 
-interface UseChatReturn {
-  messages: ChatMessage[];
+interface IUseChatReturn {
+  messages: IChatMessage[];
   sessionId: string;
   isLoading: boolean;
   isStreaming: boolean;
@@ -21,8 +21,8 @@ interface UseChatReturn {
   error: string | null;
 }
 
-export const useChat = (): UseChatReturn => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+export const useChat = (): IUseChatReturn => {
+  const [messages, setMessages] = useState<IChatMessage[]>([]);
   const [sessionId, setSessionId] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isStreaming, setIsStreaming] = useState<boolean>(false);
@@ -72,9 +72,9 @@ export const useChat = (): UseChatReturn => {
           {
             id: currentMessageIdRef.current,
             content: '',
-            role: MessageRole.Assistant,
+            role: IMessageRole.Assistant,
             timestamp: new Date(),
-            status: MessageStatus.Streaming,
+            status: IMessageStatus.Streaming,
             isStreaming: true,
           },
         ]);
@@ -99,7 +99,7 @@ export const useChat = (): UseChatReturn => {
         setMessages((prev) =>
           prev.map((msg) =>
             msg.id === currentMessageIdRef.current
-              ? { ...msg, status: MessageStatus.Sent, isStreaming: false }
+              ? { ...msg, status: IMessageStatus.Sent, isStreaming: false }
               : msg
           )
         );
@@ -122,7 +122,7 @@ export const useChat = (): UseChatReturn => {
             msg.id === currentMessageIdRef.current
               ? {
                   ...msg,
-                  status: MessageStatus.Error,
+                  status: IMessageStatus.Error,
                   isStreaming: false,
                   error: wsMessage.error,
                 }
@@ -146,12 +146,12 @@ export const useChat = (): UseChatReturn => {
       setIsLoading(true);
 
       // Add user message
-      const userMessage: ChatMessage = {
+      const userMessage: IChatMessage = {
         id: `user_${Date.now()}`,
         content: content.trim(),
-        role: MessageRole.User,
+        role: IMessageRole.User,
         timestamp: new Date(),
-        status: MessageStatus.Sent,
+        status: IMessageStatus.Sent,
       };
 
       setMessages((prev) => [...prev, userMessage]);
@@ -169,9 +169,9 @@ export const useChat = (): UseChatReturn => {
           {
             id: response.messageId,
             content: response.response,
-            role: MessageRole.Assistant,
+            role: IMessageRole.Assistant,
             timestamp: response.timestamp,
-            status: MessageStatus.Sent,
+            status: IMessageStatus.Sent,
             sources: response.sources,
           },
         ]);
@@ -190,9 +190,9 @@ export const useChat = (): UseChatReturn => {
           {
             id: `error_${Date.now()}`,
             content: 'Sorry, I encountered an error. Please try again.',
-            role: MessageRole.Assistant,
+            role: IMessageRole.Assistant,
             timestamp: new Date(),
-            status: MessageStatus.Error,
+            status: IMessageStatus.Error,
             error: 'Failed to send message',
           },
         ]);

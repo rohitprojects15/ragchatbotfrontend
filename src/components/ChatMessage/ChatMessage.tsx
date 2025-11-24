@@ -8,7 +8,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { ChatMessage as ChatMessageType, MessageRole } from '../../types/chat.types';
+import { IChatMessage as ChatMessageType, IMessageRole } from '../../interfaces/IChat';
 import './ChatMessage.scss';
 
 interface ChatMessageProps {
@@ -17,8 +17,8 @@ interface ChatMessageProps {
 }
 
 const ChatMessage: React.FC<ChatMessageProps> = ({ message, showAvatar = true }) => {
-  const isUser = message.role === MessageRole.User;
-  const isAssistant = message.role === MessageRole.Assistant;
+  const isUser = message.role === IMessageRole.User;
+  const isAssistant = message.role === IMessageRole.Assistant;
 
   return (
     <div className={`chat-message ${isUser ? 'user-message' : 'assistant-message'}`}>

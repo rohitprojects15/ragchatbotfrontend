@@ -2,43 +2,43 @@
  * Chat Types and Interfaces for RAG Chatbot
  */
 
-export enum MessageRole {
+export enum IMessageRole {
   User = 'user',
   Assistant = 'assistant',
   System = 'system',
 }
 
-export enum MessageStatus {
+export enum IMessageStatus {
   Sending = 'sending',
   Sent = 'sent',
   Error = 'error',
   Streaming = 'streaming',
 }
 
-export interface ChatMessage {
+export interface IChatMessage {
   id: string;
   content: string;
-  role: MessageRole;
+  role: IMessageRole;
   timestamp: Date;
-  status?: MessageStatus;
+  status?: IMessageStatus;
   isStreaming?: boolean;
   error?: string;
 }
 
-export interface SessionInfo {
+export interface ISessionInfo {
   sessionId: string;
   createdAt: Date;
   messageCount: number;
   lastMessageAt?: Date;
 }
 
-export interface SendMessageRequest {
+export interface ISendMessageRequest {
   sessionId: string;
   message: string;
   timestamp?: Date;
 }
 
-export interface SendMessageResponse {
+export interface ISendMessageResponse {
   messageId: string;
   sessionId: string;
   response: string;
@@ -46,19 +46,19 @@ export interface SendMessageResponse {
   sources?: string[];
 }
 
-export interface ChatHistoryResponse {
+export interface IChatHistoryResponse {
   sessionId: string;
-  messages: ChatMessage[];
+  messages: IChatMessage[];
   totalMessages: number;
 }
 
-export interface ResetSessionResponse {
+export interface IResetSessionResponse {
   success: boolean;
   newSessionId: string;
   message: string;
 }
 
-export interface WebSocketMessage {
+export interface IWebSocketMessage {
   type: 'start' | 'chunk' | 'end' | 'error';
   messageId?: string;
   content?: string;

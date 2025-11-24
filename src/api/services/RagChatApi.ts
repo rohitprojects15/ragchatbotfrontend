@@ -8,13 +8,13 @@
 import ragChatClient from '../RagChatClient';
 import { RAG_ENDPOINTS, RAG_API_MODE } from '../config/ragEndpoints';
 import {
-  ChatMessage,
-  SendMessageRequest,
-  SendMessageResponse,
-  ChatHistoryResponse,
-  ResetSessionResponse,
-  MessageRole,
-} from '../../types/chat.types';
+  IChatMessage,
+  ISendMessageRequest,
+  ISendMessageResponse,
+  IChatHistoryResponse,
+  IResetSessionResponse,
+  IMessageRole,
+} from '../../interfaces/IChat';
 
 // Mock data generator for development
 const generateMockResponse = (userMessage: string): string => {
@@ -35,8 +35,8 @@ class RagChatApiService {
    * Used as fallback when WebSocket is not available
    */
   public async sendMessage(
-    request: SendMessageRequest
-  ): Promise<SendMessageResponse> {
+    request: ISendMessageRequest
+  ): Promise<ISendMessageResponse> {
     if (RAG_API_MODE === 'mock') {
       // Mock implementation
       await delay(1000 + Math.random() * 1000); // Simulate network delay
@@ -78,7 +78,7 @@ class RagChatApiService {
   /**
    * Get chat history for a session
    */
-  public async getChatHistory(sessionId: string): Promise<ChatHistoryResponse> {
+  public async getChatHistory(sessionId: string): Promise<IChatHistoryResponse> {
     if (RAG_API_MODE === 'mock') {
       // Mock implementation - return empty history for new sessions
       await delay(300);
@@ -91,7 +91,7 @@ class RagChatApiService {
     }
 
     // Real backend call
-    return ragChatClient.get<ChatHistoryResponse>(
+    return ragChatClient.get<IChatHistoryResponse>(
       RAG_ENDPOINTS.chat.getHistory(sessionId)
     );
   }
@@ -99,7 +99,7 @@ class RagChatApiService {
   /**
    * Reset/clear a chat session
    */
-  public async resetSession(sessionId: string): Promise<ResetSessionResponse> {
+  public async resetSession(sessionId: string): Promise<IResetSessionResponse> {
     if (RAG_API_MODE === 'mock') {
       // Mock implementation
       await delay(500);
@@ -114,7 +114,7 @@ class RagChatApiService {
     }
 
     // Real backend call
-    return ragChatClient.delete<ResetSessionResponse>(
+    return ragChatClient.delete<IResetSessionResponse>(
       RAG_ENDPOINTS.chat.resetSession(sessionId)
     );
   }
