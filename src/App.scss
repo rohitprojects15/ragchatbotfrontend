@@ -2,6 +2,8 @@
  * Global App Styles
  */
 
+@import './variables.scss';
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -20,8 +22,8 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #1a1a1a;
-  background: #f7f9fc;
+  color: $text-primary-color;
+  background: $secondary-color;
   overflow: hidden;
 }
 
@@ -39,7 +41,7 @@ button {
 
 // Accessibility
 *:focus-visible {
-  outline: 2px solid #0066ff;
+  outline: 2px solid $primary-color;
   outline-offset: 2px;
 }
 
@@ -58,7 +60,7 @@ html {
 
 // Link styles
 a {
-  color: #0066ff;
+  color: $url-color;
   text-decoration: none;
 
   &:hover {

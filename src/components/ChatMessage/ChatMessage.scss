@@ -2,6 +2,8 @@
  * ChatMessage Styles
  */
 
+@import '../../variables.scss';
+
 .chat-message {
   display: flex;
   gap: 12px;
@@ -28,13 +30,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, $primary-color 0%, $tertiary-color 100%);
       color: white;
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      box-shadow: 0 2px 8px rgba(0, 163, 238, 0.3);
 
       &.user-avatar {
-        background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
-        box-shadow: 0 2px 8px rgba(0, 102, 255, 0.3);
+        background: linear-gradient(135deg, $primary-color 0%, darken($primary-color, 10%) 100%);
+        box-shadow: 0 2px 8px rgba(0, 163, 238, 0.3);
       }
 
       svg {
@@ -63,10 +65,10 @@
   // User message styles
   &.user-message {
     .message-bubble {
-      background: linear-gradient(135deg, #0066ff 0%, #0052cc 100%);
+      background: linear-gradient(135deg, $primary-color 0%, $tertiary-color 100%);
       color: white;
       border-bottom-right-radius: 4px;
-      box-shadow: 0 2px 8px rgba(0, 102, 255, 0.2);
+      box-shadow: 0 2px 8px rgba(0, 163, 238, 0.2);
 
       .message-text {
         margin: 0;
@@ -78,8 +80,8 @@
   &.assistant-message {
     .message-bubble {
       background: #ffffff;
-      color: #1a1a1a;
-      border: 1px solid #e5e7eb;
+      color: $text-primary-color;
+      border: 1px solid $border-color;
       border-bottom-left-radius: 4px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 
@@ -100,7 +102,7 @@
       h6 {
         margin: 12px 0 8px 0;
         font-weight: 600;
-        color: #111827;
+        color: $text-primary-color;
 
         &:first-child {
           margin-top: 0;
@@ -135,12 +137,12 @@
 
       code {
         &.inline-code {
-          background: #f3f4f6;
+          background: $message-bg-color;
           padding: 2px 6px;
           border-radius: 4px;
           font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
           font-size: 0.9em;
-          color: #e83e8c;
+          color: darken($primary-color, 10%);
         }
       }
 
@@ -164,7 +166,7 @@
       }
 
       a {
-        color: #0066ff;
+        color: $url-color;
         text-decoration: none;
 
         &:hover {
@@ -174,7 +176,7 @@
 
       strong {
         font-weight: 600;
-        color: #111827;
+        color: $text-primary-color;
       }
 
       em {
@@ -182,16 +184,16 @@
       }
 
       blockquote {
-        border-left: 3px solid #0066ff;
+        border-left: 3px solid $primary-color;
         padding-left: 12px;
         margin: 8px 0;
-        color: #6b7280;
+        color: $text-secondary-color;
         font-style: italic;
       }
 
       hr {
         border: none;
-        border-top: 1px solid #e5e7eb;
+        border-top: 1px solid $border-color;
         margin: 12px 0;
       }
 
@@ -202,13 +204,13 @@
 
         th,
         td {
-          border: 1px solid #e5e7eb;
+          border: 1px solid $border-color;
           padding: 8px 12px;
           text-align: left;
         }
 
         th {
-          background: #f9fafb;
+          background: $message-bg-color;
           font-weight: 600;
         }
       }
@@ -220,11 +222,11 @@
     align-items: center;
     gap: 6px;
     padding: 8px 12px;
-    background: #fef2f2;
-    border: 1px solid #fecaca;
+    background: lighten($danger-color, 47%);
+    border: 1px solid lighten($danger-color, 40%);
     border-radius: 8px;
     font-size: 13px;
-    color: #dc2626;
+    color: $danger-color;
 
     .error-icon {
       font-size: 14px;
