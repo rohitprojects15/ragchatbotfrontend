@@ -31,6 +31,29 @@ const ChatInput: React.FC<ChatInputProps> = ({
     }
   }, [message]);
 
+  // Focus input on "/" key press
+  useEffect(() => {
+    const handleKeyPress = (e: globalThis.KeyboardEvent) => {
+      // Check if "/" key is pressed and target is not an input/textarea
+      if (
+        e.key === '/' &&
+        !disabled &&
+        !isLoading &&
+        document.activeElement?.tagName !== 'INPUT' &&
+        document.activeElement?.tagName !== 'TEXTAREA'
+      ) {
+        e.preventDefault();
+        textareaRef.current?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [disabled, isLoading]);
+
   const handleSend = () => {
     const trimmedMessage = message.trim();
     if (trimmedMessage && !disabled && !isLoading) {
@@ -115,7 +138,7 @@ const ChatInput: React.FC<ChatInputProps> = ({
       </div>
 
       <div className="input-hint">
-        Press <kbd>Enter</kbd> to send, <kbd>Shift + Enter</kbd> for new line
+        Press <kbd>/</kbd> to focus, <kbd>Enter</kbd> to send, <kbd>Shift + Enter</kbd> for new line
       </div>
     </div>
   );
