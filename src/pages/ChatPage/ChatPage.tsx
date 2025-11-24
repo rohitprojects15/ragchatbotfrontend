@@ -88,7 +88,7 @@ const ChatPage: React.FC = () => {
             <ChatMessage key={message.id} message={message} />
           ))}
 
-          {(isLoading || isStreaming) && <TypingIndicator />}
+          {isLoading && !isStreaming && <TypingIndicator />}
 
           {error && (
             <div className="error-banner">
