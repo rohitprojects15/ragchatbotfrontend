@@ -206,19 +206,26 @@
 }
 
 // Responsive styles
-@media (max-width: 1024px) {
+// Tablet Styles (1024px and below)
+@media screen and (max-width: 1024px) {
   .chat-page {
     .chat-container {
       max-width: 100%;
+      padding: 0;
 
       .messages-container {
         padding: 20px 20px 16px;
+      }
+
+      .input-container {
+        width: 100%;
       }
     }
   }
 }
 
-@media (max-width: 768px) {
+// Mobile Styles (768px and below)
+@media screen and (max-width: 768px) {
   .chat-page {
     .chat-container {
       .messages-container {
@@ -243,28 +250,61 @@
 
           p {
             font-size: 15px;
+            margin: 0 0 24px 0;
           }
 
           .example-questions {
+            margin-top: 12px;
+
+            h3 {
+              font-size: 13px;
+              margin: 0 0 12px 0;
+            }
+
             .example-chips {
+              gap: 10px;
+              max-width: 100%;
+
               .example-chip {
                 padding: 8px 14px;
                 font-size: 13px;
+                border-radius: 16px;
               }
             }
           }
         }
+
+        .error-banner {
+          padding: 10px 14px;
+          border-radius: 10px;
+          margin-bottom: 12px;
+
+          .error-icon {
+            font-size: 18px;
+          }
+
+          .error-message {
+            font-size: 13px;
+          }
+        }
+      }
+
+      .input-container {
+        width: 100%;
       }
     }
 
     .session-info {
       font-size: 10px;
       padding: 4px 10px;
+      border-radius: 10px;
+      bottom: 6px;
     }
   }
 }
 
-@media (max-width: 480px) {
+// Small Mobile Styles (480px and below)
+@media screen and (max-width: 480px) {
   .chat-page {
     .chat-container {
       .messages-container {
@@ -273,12 +313,60 @@
         .empty-state {
           padding: 30px 12px;
 
+          .empty-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+
+            svg {
+              width: 34px;
+              height: 34px;
+            }
+          }
+
           h2 {
             font-size: 20px;
+            margin: 0 0 10px 0;
           }
 
           p {
             font-size: 14px;
+            margin: 0 0 20px 0;
+          }
+
+          .example-questions {
+            margin-top: 10px;
+
+            h3 {
+              font-size: 12px;
+              margin: 0 0 10px 0;
+            }
+
+            .example-chips {
+              gap: 8px;
+
+              .example-chip {
+                padding: 7px 12px;
+                font-size: 12px;
+                border-radius: 14px;
+              }
+            }
+          }
+        }
+
+        .error-banner {
+          padding: 8px 12px;
+          border-radius: 8px;
+          margin-bottom: 10px;
+          gap: 10px;
+
+          .error-icon {
+            font-size: 16px;
+          }
+
+          .error-message {
+            font-size: 12px;
           }
         }
       }
@@ -286,6 +374,190 @@
 
     .session-info {
       display: none;
+    }
+  }
+}
+
+// Medium screens (768px to 1200px)
+@media screen and (min-width: 768px) and (max-width: 1200px) {
+  .chat-page {
+    .chat-container {
+      max-width: 100%;
+
+      .messages-container {
+        padding: 22px 24px 18px;
+
+        .empty-state {
+          padding: 50px 24px;
+
+          .empty-icon {
+            width: 72px;
+            height: 72px;
+
+            svg {
+              width: 44px;
+              height: 44px;
+            }
+          }
+
+          h2 {
+            font-size: 26px;
+          }
+
+          p {
+            font-size: 16px;
+            max-width: 550px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Large screens (1200px to 1400px)
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+  .chat-page {
+    .chat-container {
+      max-width: 1100px;
+
+      .messages-container {
+        padding: 26px 28px 20px;
+
+        .empty-state {
+          padding: 70px 28px;
+
+          .empty-icon {
+            width: 88px;
+            height: 88px;
+            border-radius: 22px;
+
+            svg {
+              width: 52px;
+              height: 52px;
+            }
+          }
+
+          h2 {
+            font-size: 30px;
+          }
+
+          p {
+            font-size: 17px;
+            max-width: 650px;
+          }
+
+          .example-questions {
+            h3 {
+              font-size: 15px;
+            }
+
+            .example-chips {
+              gap: 14px;
+              max-width: 750px;
+
+              .example-chip {
+                padding: 11px 20px;
+                font-size: 15px;
+                border-radius: 22px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Large screens (1400px to 1600px)
+@media screen and (min-width: 1400px) and (max-width: 1600px) {
+  .chat-page {
+    .chat-container {
+      max-width: 1300px;
+
+      .messages-container {
+        padding: 28px 32px 22px;
+      }
+    }
+  }
+}
+
+// Extra Large screens (1600px and above)
+@media screen and (min-width: 1600px) {
+  .chat-page {
+    .chat-container {
+      max-width: 1400px;
+
+      .messages-container {
+        padding: 32px 40px 24px;
+
+        .empty-state {
+          padding: 80px 40px;
+
+          .empty-icon {
+            width: 96px;
+            height: 96px;
+            border-radius: 24px;
+            margin-bottom: 28px;
+
+            svg {
+              width: 56px;
+              height: 56px;
+            }
+          }
+
+          h2 {
+            font-size: 32px;
+            margin: 0 0 14px 0;
+          }
+
+          p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 0 36px 0;
+          }
+
+          .example-questions {
+            margin-top: 20px;
+
+            h3 {
+              font-size: 16px;
+              margin: 0 0 18px 0;
+            }
+
+            .example-chips {
+              gap: 16px;
+              max-width: 800px;
+
+              .example-chip {
+                padding: 12px 22px;
+                font-size: 16px;
+                border-radius: 24px;
+              }
+            }
+          }
+        }
+
+        .error-banner {
+          padding: 14px 18px;
+          border-radius: 14px;
+          margin-bottom: 18px;
+
+          .error-icon {
+            font-size: 22px;
+          }
+
+          .error-message {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    .session-info {
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 14px;
+      bottom: 10px;
     }
   }
 }

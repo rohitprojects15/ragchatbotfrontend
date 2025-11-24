@@ -123,7 +123,52 @@
 }
 
 // Responsive styles
-@media (max-width: 768px) {
+// Tablet Styles (1024px and below)
+@media screen and (max-width: 1024px) {
+  .chat-header {
+    padding: 18px 22px;
+
+    .header-content {
+      gap: 16px;
+    }
+
+    .header-title {
+      .app-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 11px;
+
+        svg {
+          width: 26px;
+          height: 26px;
+        }
+      }
+
+      .title-text {
+        h1 {
+          font-size: 22px;
+        }
+
+        .subtitle {
+          font-size: 12px;
+        }
+      }
+    }
+
+    .reset-button {
+      padding: 9px 16px;
+      font-size: 13px;
+
+      svg {
+        width: 17px;
+        height: 17px;
+      }
+    }
+  }
+}
+
+// Mobile Styles (768px and below)
+@media screen and (max-width: 768px) {
   .chat-header {
     padding: 16px 20px;
 
@@ -135,6 +180,7 @@
       .app-icon {
         width: 40px;
         height: 40px;
+        border-radius: 10px;
 
         svg {
           width: 24px;
@@ -156,6 +202,7 @@
     .reset-button {
       padding: 8px 14px;
       font-size: 13px;
+      border-radius: 8px;
 
       .button-text {
         display: none;
@@ -169,11 +216,29 @@
   }
 }
 
-@media (max-width: 480px) {
+// Small Mobile Styles (480px and below)
+@media screen and (max-width: 480px) {
   .chat-header {
     padding: 14px 16px;
 
+    .header-content {
+      gap: 10px;
+    }
+
     .header-title {
+      gap: 10px;
+
+      .app-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 9px;
+
+        svg {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
       .title-text {
         h1 {
           font-size: 18px;
@@ -182,6 +247,131 @@
         .subtitle {
           display: none;
         }
+      }
+    }
+
+    .reset-button {
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 7px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+// Large screens (1200px to 1400px)
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+  .chat-header {
+    padding: 22px 26px;
+
+    .header-content {
+      max-width: 1100px;
+      gap: 22px;
+    }
+
+    .header-title {
+      gap: 14px;
+
+      .app-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 13px;
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
+
+      .title-text {
+        h1 {
+          font-size: 26px;
+        }
+
+        .subtitle {
+          font-size: 14px;
+          margin: 3px 0 0 0;
+        }
+      }
+    }
+
+    .reset-button {
+      padding: 11px 20px;
+      font-size: 15px;
+      border-radius: 11px;
+
+      svg {
+        width: 19px;
+        height: 19px;
+      }
+    }
+  }
+}
+
+// Large screens (1400px to 1600px)
+@media screen and (min-width: 1400px) and (max-width: 1600px) {
+  .chat-header {
+    padding: 24px 28px;
+
+    .header-content {
+      max-width: 1300px;
+    }
+  }
+}
+
+// Extra Large screens (1600px and above)
+@media screen and (min-width: 1600px) {
+  .chat-header {
+    padding: 24px 32px;
+
+    .header-content {
+      max-width: 1400px;
+      gap: 24px;
+    }
+
+    .header-title {
+      gap: 14px;
+
+      .app-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+
+        svg {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
+      .title-text {
+        h1 {
+          font-size: 28px;
+        }
+
+        .subtitle {
+          font-size: 14px;
+          margin: 3px 0 0 0;
+        }
+      }
+    }
+
+    .reset-button {
+      padding: 12px 22px;
+      font-size: 15px;
+      border-radius: 12px;
+      gap: 10px;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .button-text {
+        font-weight: 500;
       }
     }
   }
