@@ -53,3 +53,6 @@ Thumbs.db
 # debug logs
 debug.log*
 lerna-debug.log*
+
+# reference code
+/reference
